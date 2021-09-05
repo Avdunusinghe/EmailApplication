@@ -45,12 +45,28 @@ namespace EmailApplication.Service
             {
                 //Connect to the gmail SMTP server using port 465 with SSL enabled
                 //Establish a connection to the specified mail server
-                smtpClient.Connect("smtp.gmail.com", 456, true)
+                smtpClient.Connect("smtp.gmail.com", 456, true);
+
+                //Authentication SMTP Server Requires 
+                smtpClient.Authenticate(emailAddress, password);
+                smtpClient.Send(message);
+
+                Console.WriteLine("Email Send has been Succssfull!");
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+            finally
+            {
+                //Disconnect the service
+                smtpClient.Disconnect(true);
+
+                //dispose client object
+                smtpClient.Dispose();
+            }
+
+            Console.ReadLine();
         }
     }
 }
